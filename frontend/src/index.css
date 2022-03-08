@@ -55,3 +55,29 @@ active {
 .bg-carousel-jugomar {
   background-color: #84bc2c;
 }
+
+.social { 
+  right: 200px;
+  top: 119vh;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social li {
+ list-style: none;
+}
+
+.social li a {
+ display: inline-block;
+ /*filter:invert(1);*/
+ margin-right: 10px;
+ transform: scale(0.7);
+ transition: 0.5s;
+}
+
+.social li a:hover {
+  transform: scale(0.7) translateY(-15px); 
+  filter:invert(1);
+}

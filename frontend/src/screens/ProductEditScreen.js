@@ -7,7 +7,10 @@ import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { detailProducts, updateProduct } from '../actions/productActions';
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
+import {
+  PRODUCT_UPDATE_RESET,
+  PRODUCT_DETAILS_RESET,
+} from '../constants/productConstants';
 
 const ProductEditScreen = () => {
   //const location = useLocation();
@@ -39,6 +42,8 @@ const ProductEditScreen = () => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
+      dispatch({ type: PRODUCT_DETAILS_RESET });
+     
       navigate('/admin/productlist');
     } else {
       if (!product.name || product._id !== productId) {

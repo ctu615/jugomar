@@ -5,6 +5,7 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
+  PRODUCT_DETAILS_RESET,
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
@@ -22,7 +23,8 @@ import {
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_HIGH_RATED_REQUEST,
   PRODUCT_HIGH_RATED_SUCCESS,
-  PRODUCT_HIGH_RATED_FAIL
+  PRODUCT_HIGH_RATED_FAIL,
+  
   
 } from '../constants/productConstants';
 
@@ -49,11 +51,13 @@ export const productDetailsReducer = (state = { product: {reviews: []} }, action
   // eslint-disable-next-line default-case
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
-      return { loading: true, ...state};
+      return { loading: true, ...state };
     case PRODUCT_DETAILS_SUCCESS:
       return { loading: false, product: action.payload };
     case PRODUCT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case PRODUCT_DETAILS_RESET:
+      return { product: { reviews: [] } };
     default:
       return state;
   }

@@ -79,11 +79,12 @@ const createProduct = asyncHandler(async (req, res) => {
     price: 0,
     countInStock: 0,
     rating: 0,
-    numReviews: 0,
+    numReviews: 0,    
   });
 
   const createdProduct = await product.save();
   res.status(201).json(createdProduct);
+  
 });
 
 /**
