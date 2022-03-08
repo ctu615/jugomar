@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
@@ -141,18 +142,18 @@ const ProfileScreen = () => {
               {orders.map(order => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{moment(order.createdAt).format('MMM DD, YYYY')}</td>
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      moment(order.paidAt).format('MMM DD, YYYY')
                     ) : (
                       <i className='fas fa-times' style={{ color: 'red' }} />
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
+                      moment(order.deliveredAt).format('MMM DD, YYYY')
                     ) : (
                       <i className='fas fa-times' style={{ color: 'red' }} />
                     )}

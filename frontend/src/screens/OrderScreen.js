@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -133,7 +134,8 @@ const OrderScreen = () => {
               </p>
               {order.isDelivered ? (
                 <Message variant='success'>
-                  Delivered on {order.deliveredAt}
+                  Delivered on{' '}
+                  {moment(order.deliveredAt).format('MMM DD, YYYY')}
                 </Message>
               ) : (
                 <Message variant='danger'>Not delivered</Message>
@@ -147,7 +149,9 @@ const OrderScreen = () => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant='success'>Paid on {order.paidAt}</Message>
+                <Message variant='success'>
+                  Paid on {moment(order.paidAt).format('MMM DD, YYYY')}
+                </Message>
               ) : (
                 <Message variant='danger'>Not paid</Message>
               )}
@@ -266,7 +270,7 @@ const OrderScreen = () => {
                       className='btn-block btn-success size="lg"'
                       onClick={successDeliveryHandler}
                     >
-                      Mark as deliverd <i className='fa-solid fa-check'/>
+                      Mark as deliverd <i className='fa-solid fa-check' />
                     </Button>
                   </ListGroup.Item>
                 )}

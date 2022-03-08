@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listOrders} from '../actions/orderActions';
+import { listOrders } from '../actions/orderActions';
 
 const OrderListScreen = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const OrderListScreen = () => {
     }
   }, [dispatch, navigate, userInfo]);
 
-
   return (
     <>
       <h1 className='text-success'>Orders</h1>
@@ -41,7 +41,7 @@ const OrderListScreen = () => {
               <th>ID#</th>
               <th>USER</th>
               <th>TOTAL</th>
-              <th>PAID</th>
+              <th>PAID ON</th>
               <th>DELIVERED</th>
               <th>DETAILS</th>
             </tr>
@@ -49,20 +49,20 @@ const OrderListScreen = () => {
           <tbody>
             {orders.map(order => (
               <tr key={order._id}>
-                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{moment(order.createdAt).format('MMM DD, YYYY')}</td>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>#{order.totalPrice}</td>
                 <td>
                   {order.isPaid ? (
-                    order.paidAt.substring(0, 10)
+                    moment(order.paidAt).format('MMM DD, YYYY')
                   ) : (
                     <i className='fas fa-times' style={{ color: 'red' }} />
                   )}
                 </td>
                 <td>
                   {order.isDelivered ? (
-                    order.deliveredAt.substring(0, 10)
+                    moment(order.deliveredAt).format('MMM DD, YYYY')
                   ) : (
                     <i className='fas fa-times' style={{ color: 'red' }} />
                   )}
@@ -73,11 +73,8 @@ const OrderListScreen = () => {
                     className='d-grid
                     gap-2'
                   >
-                    <Button
-                      variant='info'
-                      className='btn-block size="lg"'
-                    >
-                      <i className='fas fa-folder'/>
+                    <Button variant='info' className='btn-block size="lg"'>
+                      <i className='fas fa-folder' />
                     </Button>
                   </LinkContainer>
                 </td>
