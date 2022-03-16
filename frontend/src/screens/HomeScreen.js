@@ -10,7 +10,6 @@ import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
 import { listProducts } from '../actions/productActions';
 
-
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const { term } = useParams();
@@ -20,7 +19,7 @@ const HomeScreen = () => {
 
   const productList = useSelector(state => state.productList);
   const { loading, error, products, pages, page } = productList;
-  
+
   useEffect(() => {
     dispatch(listProducts(term, pageNumberOptions));
   }, [dispatch, term, pageNumberOptions]);
@@ -48,8 +47,16 @@ const HomeScreen = () => {
               product.name === 'Sample name' ? (
                 ''
               ) : (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={2}>
+                <Col
+                  key={product._id}
+                  sm={12}
+                  md={6}
+                  lg={4}
+                  xl={3}
+                  style={{ marginBottom: '25px' }}
+                >
                   <Product product={product} />
+                
                 </Col>
               )
             )}

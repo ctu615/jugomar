@@ -1,6 +1,8 @@
 import path from 'path';
 import express from 'express';
 import multer from 'multer';
+import sharp from 'sharp';
+import fs from 'fs';
 
 const router = express.Router();
 
@@ -34,7 +36,7 @@ const upload = multer({
   },
 });
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
   res.send(`/${req.file.path}`);
 });
 

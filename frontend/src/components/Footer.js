@@ -8,7 +8,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className='text-center py-2'>
-            <ul class='social'>
+            <ul className='social'>
               <li>
                 <h6 className='text-info'>Contact us:</h6>
               </li>
@@ -40,7 +40,7 @@ const Footer = () => {
           </Col>
         </Row>
         <Row>
-          <Col className='text-center py-2'>
+          <Col className=' text-center py-2'>
             Copyright &copy; {Year} JugoMar. All rights reserved.
           </Col>
         </Row>

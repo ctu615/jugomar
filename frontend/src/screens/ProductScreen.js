@@ -54,6 +54,8 @@ const ProductScreen = () => {
     dispatch(createProductReview(id, { rating, comment }));
     //navigate(`/cart/${id}?quantity=${quantity}`);
   };
+   const intlNumFormat = new Intl.NumberFormat('en-US');
+
 
   return (
     <>
@@ -84,10 +86,9 @@ const ProductScreen = () => {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Price:{' '}
-                  <img src={require('../img/naira_icon_14.png')} alt='Naira' />
+                  Price: <i className='fa-solid fa-naira-sign' />
                   {product.price
-                    ? product.price.toFixed(2)
+                    ? intlNumFormat.format(product.price)
                     : 'Price unavailable'}
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -102,8 +103,9 @@ const ProductScreen = () => {
                     <Row>
                       <Col>Price:</Col>
                       <Col className='fw-bolder'>
+                        <i className='fa-solid fa-naira-sign' />
                         {product.price
-                          ? product.price.toFixed(2)
+                          ? intlNumFormat.format(product.price)
                           : 'Price unavailable'}
                       </Col>
                     </Row>

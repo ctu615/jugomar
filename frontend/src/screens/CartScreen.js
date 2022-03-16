@@ -36,11 +36,12 @@ const CartScreen = () => {
 
   const removeFromCartHandler = id => {
     //console.log('removed');
-    dispatch(removeFromCart(id))
+    dispatch(removeFromCart(id));
   };
   const checkoutHandler = id => {
-    navigate('/login?redirect=/shipping')
+    navigate('/login?redirect=/shipping');
   };
+  const intlNumFormat = new Intl.NumberFormat('en-US');
 
   return (
     <>
@@ -50,8 +51,9 @@ const CartScreen = () => {
           <hr />
           {cartItems.length === 0 ? (
             <Message>
-              Please add items. Your cart is empty
-              <Link to='/'>Return To Products</Link>
+              {' '}
+              Your cart is empty, please add items.{' '}
+              <Link to='/'>Return To Products </Link>
             </Message>
           ) : (
             <ListGroup variant='flush'>
@@ -59,7 +61,13 @@ const CartScreen = () => {
                 <ListGroupItem key={item.product}>
                   <Row>
                     <Col md={2}>
-                      <Image src={item.image} alt={item.name} fluid rounded />
+                      <Link
+                        to={`/product/${item.product}`}
+                        style={{ textDecoration: 'none' }}
+                        className='text-success fw-bolder'
+                      >
+                        <Image src={item.image} alt={item.name} fluid rounded />
+                      </Link>
                     </Col>
                     <Col md={3}>
                       <Link
@@ -71,11 +79,8 @@ const CartScreen = () => {
                       </Link>
                     </Col>
                     <Col md={2}>
-                      <img
-                        src={require('../img/naira_icon_14.png')}
-                        alt='Naira'
-                      />
-                      {item.price}
+                      <i className='fa-solid fa-naira-sign' />{' '}
+                      {intlNumFormat.format(item.price)}
                     </Col>
 
                     <Col md={2}>
@@ -128,13 +133,13 @@ const CartScreen = () => {
                 <span className='fw-bolder'>
                   {' '}
                   <i className='fa-solid fa-naira-sign' />
-                  {cartItems
-                    .reduce(
+                  {intlNumFormat.format(
+                    cartItems.reduce(
                       (accumulator, currentItem) =>
                         accumulator + currentItem.quantity * currentItem.price,
                       0
                     )
-                    .toFixed(2)}
+                  )}
                 </span>
               </ListGroup.Item>
               <ListGroup.Item

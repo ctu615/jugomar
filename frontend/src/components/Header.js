@@ -11,6 +11,8 @@ const Header = () => {
   const navigate = useNavigate();
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
+  const cartSelector = useSelector(state => state.cart);
+  const { cartItems } = cartSelector;
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -37,7 +39,15 @@ const Header = () => {
             >
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart' /> Shopping cart
+                  Cart {'  '}
+                  <i className='fas fa-shopping-cart' />
+                  <span className='badge badge-dark' id='lblCartCount'>
+                    {cartItems.reduce(
+                      (accumulator, currentItem) =>
+                        accumulator + currentItem.quantity,
+                      0
+                    )}{' '}
+                  </span>
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
@@ -71,7 +81,6 @@ const Header = () => {
                 </NavDropdown>
               )}
             </Nav>
-            
           </Navbar.Collapse>
         </Container>
       </Navbar>

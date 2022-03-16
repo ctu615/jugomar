@@ -33,8 +33,7 @@ const ProductCarousel = () => {
                 <Image src={product.image} alt={product.name} fluid />
                 <Carousel.Caption className='carousel-caption'>
                   <h2>
-                    {product.name} <i className='fa-solid fa-naira-sign' />
-                    {product.price.toFixed(2)}
+                    {product.name} - {product.subname}
                   </h2>
                 </Carousel.Caption>
               </Link>

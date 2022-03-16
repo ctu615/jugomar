@@ -71,6 +71,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     name: 'Sample name',
+    subname: 'Sample subname',
     user: req.user._id,
     image: '/images/sample.png',
     description: 'Sample description',

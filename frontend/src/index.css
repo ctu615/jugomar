@@ -36,6 +36,10 @@ active {
   position: absolute;
   top: 0;
 }
+.mycard-body {
+  position: absolute;
+ bottom: 0;
+}
 
 .carousel-caption h2 {
   color: #fff
@@ -80,4 +84,25 @@ active {
 .social li a:hover {
   transform: scale(0.7) translateY(-15px); 
   filter:invert(1);
+}
+
+.badge {
+  padding-left: 6px;
+  padding-right: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #84bc2c;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -6px; 
 }
