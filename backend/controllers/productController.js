@@ -80,7 +80,7 @@ const createProduct = asyncHandler(async (req, res) => {
     price: 0,
     countInStock: 0,
     rating: 0,
-    numReviews: 0,    
+    numReviews: 0,
   });
 
   const createdProduct = await product.save();
@@ -95,13 +95,14 @@ const createProduct = asyncHandler(async (req, res) => {
  */
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
+  const { name, subname, price, description, image, brand, category, countInStock } =
     req.body;
 
   const product = await Product.findById(req.params.id);
 
   if (product) {
     product.name = name;
+    product.subname = subname;
     product.price = price;
     product.description = description;
     product.image = image;

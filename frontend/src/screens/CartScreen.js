@@ -104,7 +104,7 @@ const CartScreen = () => {
                     <Col md={2}>
                       <Button
                         type='button'
-                        variant='light'
+                        variant='danger'
                         onClick={() => removeFromCartHandler(item.product)}
                       >
                         <i className='fas fa-trash' />

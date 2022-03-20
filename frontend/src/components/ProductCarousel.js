@@ -22,7 +22,7 @@ const ProductCarousel = () => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <h1 className='text-info'>Highly Rated Products</h1>
+      <h1 className='text-info'>High Rated Products</h1>
       <Carousel pause='hover' className='rounded bg-carousel-jugomar'>
         {products.map(product =>
           product.name === 'Sample name' ? (

@@ -19,6 +19,7 @@ const ProductEditScreen = () => {
   const productId = id;
 
   const [name, setName] = useState('');
+  const [subname, setSubname] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
@@ -50,6 +51,7 @@ const ProductEditScreen = () => {
         dispatch(detailProducts(productId));
       } else {
         setName(product.name);
+        setSubname(product.subname);
         setPrice(product.price);
         setImage(product.image);
         setDescription(product.description);
@@ -62,6 +64,7 @@ const ProductEditScreen = () => {
     dispatch,
     navigate,
     product.name,
+    product.subname,
     product._id,
     product.price,
     product.image,
@@ -101,6 +104,7 @@ const ProductEditScreen = () => {
       updateProduct({
         _id: productId,
         name,
+        subname,
         price,
         image,
         description,
@@ -137,6 +141,16 @@ const ProductEditScreen = () => {
                 placeholder='Enter name ...'
                 value={name}
                 onChange={e => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId='subname'>
+              <Form.Label>Subname</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter subname ...'
+                value={subname}
+                onChange={e => setSubname(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
