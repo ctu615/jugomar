@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button,} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
@@ -49,7 +49,7 @@ const RegisterScreen = () => {
       <Form
         onSubmit={submitHandler}
         className='d-grid
-                    gap-2'
+                    gap-2 py-3'
       >
         <Form.Group controlId='name'>
           <Form.Label>Name</Form.Label>
@@ -92,21 +92,19 @@ const RegisterScreen = () => {
         </Form.Group>
 
         <Button type='submit' variant='success'>
-          Register user
+          Sign up
         </Button>
       </Form>
 
-      <Row className='py-3'>
-        <Col>
-          Already a customer?{' '}
-          <Link
-            to={redirect ? `/login?redirect=${redirect}` : '/login'}
-            className='text-success'
-          >
-            Login
-          </Link>
-        </Col>
-      </Row>
+      <h6 className='text-center text-info py-2'>
+        Already a customer?{' '}
+        <Link
+          to={redirect ? `/login?redirect=${redirect}` : '/login'}
+          className='text-center text-success py-2'
+        >
+          Login
+        </Link>
+      </h6>
     </FormContainer>
   );
 };

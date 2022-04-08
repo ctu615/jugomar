@@ -52,7 +52,9 @@ const PlaceOrderScreen = () => {
     // eslint-disable-next-line
   }, [navigate, success]);
 
+
   const placeOrderHandler = () => {
+   
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
@@ -64,6 +66,8 @@ const PlaceOrderScreen = () => {
         totalPrice: cart.totalPrice,
       })
     );
+     cart.cartItems = [];
+   
   };
   return (
     <>

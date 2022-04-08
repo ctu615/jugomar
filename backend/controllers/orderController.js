@@ -1,6 +1,9 @@
 import asyncHandler from 'express-async-handler';
-
 import Order from '../models/orderModel.js';
+import {
+  sendOrderPaymentEmail,
+  sendOrderDeliveryEmail,
+} from '../emails/account.js';
 
 /**
  * @Desc    Create new order
@@ -51,7 +54,6 @@ const getOrderById = asyncHandler(async (req, res) => {
     'user',
     'name email'
   );
-
   if (order) {
     res.json(order);
   } else {
@@ -67,9 +69,24 @@ const getOrderById = asyncHandler(async (req, res) => {
  */
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
 
   if (order) {
+    sendOrderPaymentEmail(
+      order._id.toString(),
+      order.shippingAddress.address,
+      order.shippingAddress.city,
+      order.shippingAddress.postalCode,
+      order.shippingAddress.country,
+      order.user.email,
+      order.user.name,
+      order.paymentMethod,
+      order.totalPrice
+    );
+
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
@@ -93,9 +110,22 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
  */
 
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
 
   if (order) {
+    sendOrderDeliveryEmail(
+      order._id.toString(),
+      order.shippingAddress.address,
+      order.shippingAddress.city,
+      order.shippingAddress.postalCode,
+      order.shippingAddress.country,
+      order.user.email,
+      order.user.name,
+      order.totalPrice
+    );
     order.isDelivered = true;
     order.deliveredAt = Date.now();
     const updatedOrder = await order.save();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
@@ -33,6 +33,11 @@ const LoginScreen = () => {
     dispatch(login(email, password));
   };
 
+  /* const registerButtonHandler = e => {
+    e.preventDefault();
+    navigate(redirect ? `/register?redirect=${redirect}` : '/register');
+  };*/
+
   return (
     <FormContainer>
       <h1 className='text-success'>Sign in</h1>
@@ -41,7 +46,7 @@ const LoginScreen = () => {
       <Form
         onSubmit={submitHandler}
         className='d-grid
-                    gap-2'
+                    gap-2 py-3'
       >
         <Form.Group controlId='email'>
           <Form.Label>Email address</Form.Label>
@@ -52,7 +57,6 @@ const LoginScreen = () => {
             onChange={e => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
         <Form.Group className='mb-3' controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -70,18 +74,15 @@ const LoginScreen = () => {
           Sign in
         </Button>
       </Form>
-
-      <Row className='py-3'>
-        <Col>
-          New Customer?{' '}
-          <Link
-            to={redirect ? `/register?redirect=${redirect}` : '/register'}
-            className='text-success'
-          >
-            Register
-          </Link>
-        </Col>
-      </Row>
+      <h6 className='text-center text-info py-2'>
+        New Customer?{' '}
+        <Link
+          to={redirect ? `/register?redirect=${redirect}` : '/register'}
+          className='text-center text-success py-2'
+        >
+          Sign up
+        </Link>
+      </h6>
     </FormContainer>
   );
 };

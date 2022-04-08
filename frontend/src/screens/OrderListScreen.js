@@ -17,7 +17,7 @@ const OrderListScreen = () => {
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-
+  const intlNumFormat = new Intl.NumberFormat('en-US');
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
@@ -52,7 +52,10 @@ const OrderListScreen = () => {
                 <td>{moment(order.createdAt).format('MMM DD, YYYY')}</td>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
-                <td>#{order.totalPrice}</td>
+                <td>
+                  <i className='fa-solid fa-naira-sign' /> {' '}
+                  {intlNumFormat.format(order.totalPrice)}
+                </td>
                 <td>
                   {order.isPaid ? (
                     moment(order.paidAt).format('MMM DD, YYYY')

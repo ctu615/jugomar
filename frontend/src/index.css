@@ -21,7 +21,7 @@ h2 {
 }
 
 active {
-    color: rgb(20, 226, 47) !important;
+  color: rgb(20, 226, 47) !important;
   background: rgb(19, 204, 59) !important;
 }
 
@@ -38,18 +38,18 @@ active {
 }
 .mycard-body {
   position: absolute;
- bottom: 0;
+  bottom: 0;
 }
 
 .carousel-caption h2 {
-  color: #fff
+  color: #fff;
 }
 
-.carousel img{
+.carousel img {
   height: 300px;
   padding: 30px;
   margin: 40px;
-  border-radius: 50%
+  border-radius: 50%;
 }
 
 .carousel a {
@@ -60,7 +60,7 @@ active {
   background-color: #84bc2c;
 }
 
-.social { 
+.social {
   right: 200px;
   top: 119vh;
   z-index: 10;
@@ -70,20 +70,20 @@ active {
 }
 
 .social li {
- list-style: none;
+  list-style: none;
 }
 
 .social li a {
- display: inline-block;
- /*filter:invert(1);*/
- margin-right: 10px;
- transform: scale(0.7);
- transition: 0.5s;
+  display: inline-block;
+  /*filter:invert(1);*/
+  margin-right: 10px;
+  transform: scale(0.7);
+  transition: 0.5s;
 }
 
 .social li a:hover {
-  transform: scale(0.7) translateY(-15px); 
-  filter:invert(1);
+  transform: scale(0.7) translateY(-15px);
+  filter: invert(1);
 }
 
 .badge {
@@ -99,10 +99,11 @@ active {
   background-color: #c67605;
 }
 #lblCartCount {
-    font-size: 12px;
-    background: #84bc2c;
-    color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -6px; 
+  font-size: 12px;
+  background: #84bc2c;
+  color: #fff;
+  padding: 0 4px;
+  vertical-align: top;
+  align-items: center;
+  margin-left: -6px;
 }

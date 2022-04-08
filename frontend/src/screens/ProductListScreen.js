@@ -51,7 +51,6 @@ const ProductListScreen = () => {
     } else {
       dispatch(listProducts('', pageNumberOptions));
     }
-    console.log();
   }, [
     dispatch,
     navigate,

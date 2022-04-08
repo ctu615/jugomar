@@ -7,14 +7,15 @@ import fs from 'fs';
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, 'uploads/');
   },
-  filename(req, file, cb) {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    );
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${file.fieldname}-${Date.now()}${path.extname(
+      file.originalname
+    )}`;
+
+    cb(null, uniqueSuffix);
   },
 });
 
@@ -37,8 +38,17 @@ const upload = multer({
 });
 
 router.post('/', upload.single('image'), async (req, res) => {
-  
-  res.send(`/${req.file.path}`);
+  const newFilePath = path.resolve(
+    req.file.destination,
+    `${req.file.fieldname}-${Date.now()}${path.extname(req.file.originalname)}`
+  );
+  await sharp(req.file.path).resize(300, 300).toFile(newFilePath);
+  const newFilePathBase = `${req.file.destination}${
+    path.parse(newFilePath).base
+  }`;
+  fs.unlinkSync(req.file.path);
+
+  res.send(`/${newFilePathBase}`);
 });
 
 export default router;

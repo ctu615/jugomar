@@ -20,7 +20,6 @@ const HomeScreen = () => {
   const productList = useSelector(state => state.productList);
   const { loading, error, products, pages, page } = productList;
 
-
   useEffect(() => {
     dispatch(listProducts(term, pageNumberOptions));
   }, [dispatch, term, pageNumberOptions]);
@@ -57,7 +56,6 @@ const HomeScreen = () => {
                   style={{ marginBottom: '25px' }}
                 >
                   <Product product={product} />
-                
                 </Col>
               )
             )}

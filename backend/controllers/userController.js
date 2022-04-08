@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
+import { sendWelcomeEmail, sendCancellationEmail } from '../emails/account.js';
 
 /**
  * @Desc    User auth, get token
@@ -47,6 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    sendWelcomeEmail(user.email, user.name);
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -133,7 +135,9 @@ const getUsers = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
+   sendCancellationEmail(user.email, user.name);
     await user.remove();
+
     res.json({ message: 'User removed' });
   } else {
     res.status(404);
@@ -170,7 +174,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin ?? user.isAdmin;
-    
+
     const updatedUser = await user.save();
 
     res.json({

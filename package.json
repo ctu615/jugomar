@@ -16,6 +16,7 @@
   "author": "Fit Coder",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.0.0",
     "dotenv": "^10.0.0",
