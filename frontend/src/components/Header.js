@@ -62,8 +62,7 @@ const Header = () => {
               ) : (
                 <LinkContainer to='/login'>
                   <Nav.Link>
-                    {' '}
-                    <i className='fas fa-user' /> Sign in or Sign up
+                    <i className='fas fa-user' /> Sign in
                   </Nav.Link>
                 </LinkContainer>
               )}

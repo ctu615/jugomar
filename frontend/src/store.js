@@ -25,6 +25,8 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderDeliveryReducer,
+  orderTrackingReducer,
+  orderShippedReducer,
   myOrderListReducer,
   orderListReducer,
 } from './reducers/orderReducers';
@@ -45,7 +47,9 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  orderShipped: orderShippedReducer,
   orderDelivery: orderDeliveryReducer,
+  orderTracking: orderTrackingReducer,
   myOrderList: myOrderListReducer,
   orderList: orderListReducer,
   userList: userListReducer,
@@ -65,8 +69,13 @@ const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
   ? JSON.parse(localStorage.getItem('shippingAddress'))
   : {};
 
+
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
   ? JSON.parse(localStorage.getItem('paymentMethod'))
+  : '';
+
+const trackingNumberFromStorage = localStorage.getItem('trackingNumber')
+  ? JSON.parse(localStorage.getItem('trackingNumber'))
   : '';
 
 const initialState = {
@@ -74,6 +83,7 @@ const initialState = {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
     paymentMethod: paymentMethodFromStorage,
+    trackingNumber: trackingNumberFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },
 };

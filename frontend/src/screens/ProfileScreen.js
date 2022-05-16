@@ -134,6 +134,7 @@ const ProfileScreen = () => {
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
+                <th>SHIPPED</th>
                 <th>DELIVERED</th>
                 <th>DETAILS</th>
               </tr>
@@ -147,6 +148,13 @@ const ProfileScreen = () => {
                   <td>
                     {order.isPaid ? (
                       moment(order.paidAt).format('MMM DD, YYYY')
+                    ) : (
+                      <i className='fas fa-times' style={{ color: 'red' }} />
+                    )}
+                  </td>
+                  <td>
+                    {order.isShipped ? (
+                      moment(order.shippedAt).format('MMM DD, YYYY')
                     ) : (
                       <i className='fas fa-times' style={{ color: 'red' }} />
                     )}

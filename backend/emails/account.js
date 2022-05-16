@@ -27,20 +27,57 @@ const sendOrderPaymentEmail = (
   sgMail.send({
     to: email,
     from: 'jugomarltd@gmail.com',
-    subject: `Your Amazon.com order #${orderNumber}`,
-    text: `Hello ${name},
-     Thank you for shopping with us here at JugoMar Nourishing Nutritionals. 
-     We’ll send a confirmation email when your items are delivered.
+    subject: `Your Jugomar.com order #${orderNumber}`,
+    text: ` Hello ${name},
+
+      Thank you for shopping with us here at JugoMar Nourishing Nutritionals. 
+      We’ll send a confirmation email when your items are delivered.
 
       Order Details: 
-      
+        
       Order #: ${orderNumber}
 
       Payment Method: ${paymentMethod}
       
       Ship to: ${address}, ${city}, ${postalCode}, ${country}.
 
-      Order Total: ${intlNumFormat.format(orderTotal)}
+      Order Total: # ${intlNumFormat.format(orderTotal)} 
+     `,
+  });
+};
+
+const sendOrderShippedEmail = (
+  orderNumber,
+  address,
+  city,
+  postalCode,
+  country,
+  email,
+  trackingNumber,
+  name,
+  orderTotal
+) => {
+  sgMail.send({
+    to: email,
+    from: 'jugomarltd@gmail.com',
+    subject: `Shipped your Jugomar.com order #${orderNumber}`,
+    text: `
+    Hello ${name},
+    
+      Thank you for shopping with us here at JugoMar Nourishing Nutritionals. 
+      Your item(s) have been shipped.
+
+      Order Details:
+
+      Order # ${orderNumber}
+
+      Items are shipping to: ${address}, ${city}, ${postalCode}, ${country}.
+      
+      Order Tracking Number: ${
+        trackingNumber ? trackingNumber : 'Tracking number is unavailable!'
+      }
+
+      Order Total: #${intlNumFormat.format(orderTotal)}
      `,
   });
 };
@@ -52,15 +89,17 @@ const sendOrderDeliveryEmail = (
   postalCode,
   country,
   email,
+  trackingNumber,
   name,
   orderTotal
 ) => {
   sgMail.send({
     to: email,
     from: 'jugomarltd@gmail.com',
-    subject: `Your Amazon.com order #${orderNumber}`,
+    subject: `Delivered your Jugomar.com order #${orderNumber}`,
     text: `Hello ${name},
-     Thank you for shopping with us her at JugoMar Nourishing Nutritionals. 
+
+     Thank you for shopping with us here at JugoMar Nourishing Nutritionals. 
      Your item(s) were delivered.
 
      Order Details:
@@ -69,9 +108,13 @@ const sendOrderDeliveryEmail = (
 
       Items were deliverd to: ${address}, ${city}, ${postalCode}, ${country}.
       
+       Order Tracking Number: ${
+         trackingNumber ? trackingNumber : 'Tracking number is unavailable!'
+       }
+
       Order delivery time: ${moment(Date.now()).format('MMM DD, YYYY')}
 
-      Order Total: ${intlNumFormat.format(orderTotal)}
+      Order Total: #${intlNumFormat.format(orderTotal)}
      `,
   });
 };
@@ -88,6 +131,7 @@ const sendCancellationEmail = (email, name) => {
 export {
   sendWelcomeEmail,
   sendOrderPaymentEmail,
+  sendOrderShippedEmail,
   sendOrderDeliveryEmail,
   sendCancellationEmail,
 };

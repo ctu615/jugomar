@@ -15,9 +15,15 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  ORDER_SHIPPED_REQUEST,
+  ORDER_SHIPPED_SUCCESS,
+  ORDER_SHIPPED_FAIL,
   ORDER_DELIVERY_REQUEST,
   ORDER_DELIVERY_SUCCESS,
   ORDER_DELIVERY_FAIL,
+  ORDER_UPDATE_TRACKING_REQUEST,
+  ORDER_UPDATE_TRACKING_SUCCESS,
+  ORDER_UPDATE_TRACKING_FAIL,
 } from '../constants/orderConstants';
 
 export const createOrder = order => async (dispatch, getState) => {
@@ -132,11 +138,91 @@ export const payOrder =
     }
   };
 
-export const deliveryOrder =
-  (order) => async (dispatch, getState) => {
+export const shippedOrder = order => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_SHIPPED_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/shipped`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_SHIPPED_SUCCESS,
+      payload: data,
+    });
+
+    //localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: ORDER_SHIPPED_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deliveryOrder = order => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DELIVERY_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/delivery`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_DELIVERY_SUCCESS,
+      payload: data,
+    });
+
+    //localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: ORDER_DELIVERY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateTrackingOrder =
+  (order) =>
+  async (dispatch, getState) => {
     try {
       dispatch({
-        type: ORDER_DELIVERY_REQUEST,
+        type: ORDER_UPDATE_TRACKING_REQUEST,
       });
 
       const {
@@ -144,26 +230,25 @@ export const deliveryOrder =
       } = getState();
 
       const config = {
-        headers: {          
+        headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
       const { data } = await axios.put(
-        `/api/orders/${order._id}/delivery`,
-        {},
+        `/api/orders/${order.id}/tracking`,
+        order,
         config
       );
-
       dispatch({
-        type: ORDER_DELIVERY_SUCCESS,
+        type: ORDER_UPDATE_TRACKING_SUCCESS,
         payload: data,
       });
-
-      //localStorage.setItem('userInfo', JSON.stringify(data));
+      
     } catch (error) {
       dispatch({
-        type: ORDER_DELIVERY_FAIL,
+        type: ORDER_UPDATE_TRACKING_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message
@@ -229,7 +314,6 @@ export const listOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_SUCCESS,
       payload: data,
     });
-    
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,

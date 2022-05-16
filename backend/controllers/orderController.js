@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
 import {
   sendOrderPaymentEmail,
+  sendOrderShippedEmail,
   sendOrderDeliveryEmail,
 } from '../emails/account.js';
 
@@ -34,6 +35,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       paymentMethod,
       itemsPrice,
       taxPrice,
+      trackingNumber: 'SAMPLETRACKING',
       shippingPrice,
       totalPrice,
     });
@@ -123,6 +125,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
       order.shippingAddress.postalCode,
       order.shippingAddress.country,
       order.user.email,
+      order.trackingNumber,
       order.user.name,
       order.totalPrice
     );
@@ -130,6 +133,69 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
     order.deliveredAt = Date.now();
     const updatedOrder = await order.save();
     res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+/**
+ * @Desc    Update order to shipped
+ * @Route   PUT /api/orders/:id/shipped
+ * @Access  Private(Admin) route
+ */
+
+const updateOrderToShipped = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
+  if (order) {
+    sendOrderShippedEmail(
+      order._id.toString(),
+      order.shippingAddress.address,
+      order.shippingAddress.city,
+      order.shippingAddress.postalCode,
+      order.shippingAddress.country,
+      order.user.email,
+      order.trackingNumber,
+      order.user.name,
+      order.totalPrice
+    );
+    order.isShipped = true;
+    order.shippedAt = Date.now();
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+/**
+ * @Desc    Update order tracking
+ * @Route   PUT /api/orders/:id/tracking
+ * @Access  Private(Admin) route
+ */
+
+const updateOrderToTracking = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.trackingNumber = req.body.trackingNumber || order.trackingNumber;
+    const updatedOrder = await order.save();
+    res.json({
+      _id: updatedOrder._id,
+      user: req.user._id,
+      orderItems: updatedOrder.orderItems,
+      shippingAddress: updatedOrder.shippingAddress,
+      paymentMethod: updatedOrder.paymentMethod,
+      itemsPrice: updatedOrder.itemsPrice,
+      taxPrice: updatedOrder.taxPrice,
+      trackingNumber: updatedOrder.trackingNumber,
+      shippingPrice: updatedOrder.shippingPrice,
+      totalPrice: updatedOrder.totalPrice,
+    });
   } else {
     res.status(404);
     throw new Error('Order not found');
@@ -161,7 +227,9 @@ const getOrders = asyncHandler(async (req, res) => {
 export {
   addOrderItems,
   getOrderById,
+  updateOrderToTracking,
   updateOrderToDelivered,
+  updateOrderToShipped,
   updateOrderToPaid,
   getMyOrders,
   getOrders,

@@ -42,6 +42,8 @@ const OrderListScreen = () => {
               <th>USER</th>
               <th>TOTAL</th>
               <th>PAID ON</th>
+              <th>SHIPPED</th>
+              <th>TRACKING #</th>
               <th>DELIVERED</th>
               <th>DETAILS</th>
             </tr>
@@ -53,7 +55,7 @@ const OrderListScreen = () => {
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
                 <td>
-                  <i className='fa-solid fa-naira-sign' /> {' '}
+                  <i className='fa-solid fa-naira-sign' />{' '}
                   {intlNumFormat.format(order.totalPrice)}
                 </td>
                 <td>
@@ -61,6 +63,20 @@ const OrderListScreen = () => {
                     moment(order.paidAt).format('MMM DD, YYYY')
                   ) : (
                     <i className='fas fa-times' style={{ color: 'red' }} />
+                  )}
+                </td>
+                <td>
+                  {order.isShipped ? (
+                    moment(order.shippedAt).format('MMM DD, YYYY')
+                  ) : (
+                    <i className='fas fa-times' style={{ color: 'red' }} />
+                  )}
+                </td>
+                <td>
+                  {order.trackingNumber ? (
+                    order.trackingNumber
+                  ) : (
+                    <p>Pending Tracking #</p>
                   )}
                 </td>
                 <td>

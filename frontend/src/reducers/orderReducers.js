@@ -16,10 +16,18 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  ORDER_SHIPPED_REQUEST,
+  ORDER_SHIPPED_SUCCESS,
+  ORDER_SHIPPED_FAIL,
+  ORDER_SHIPPED_RESET,
   ORDER_DELIVERY_REQUEST,
   ORDER_DELIVERY_SUCCESS,
   ORDER_DELIVERY_FAIL,
   ORDER_DELIVERY_RESET,
+  ORDER_UPDATE_TRACKING_REQUEST,
+  ORDER_UPDATE_TRACKING_SUCCESS,
+  ORDER_UPDATE_TRACKING_FAIL,
+  ORDER_UPDATE_TRACKING_RESET,
 } from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -91,6 +99,7 @@ export const orderPayReducer = (state = {}, action) => {
       return state;
   }
 };
+
 export const orderDeliveryReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELIVERY_REQUEST:
@@ -108,6 +117,44 @@ export const orderDeliveryReducer = (state = {}, action) => {
         error: action.payload,
       };
     case ORDER_DELIVERY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderTrackingReducer = (state = { order: {} }, action) => {
+  switch (action.type) {
+    case ORDER_UPDATE_TRACKING_REQUEST:
+      return { loading: true };
+    case ORDER_UPDATE_TRACKING_SUCCESS:
+      return { loading: false, success: true,/* order: action.payload*/ };
+    case ORDER_UPDATE_TRACKING_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_UPDATE_TRACKING_RESET:
+      return { order: {}};
+    default:
+      return state;
+  }
+};
+
+export const orderShippedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_SHIPPED_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_SHIPPED_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_SHIPPED_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case ORDER_SHIPPED_RESET:
       return {};
     default:
       return state;

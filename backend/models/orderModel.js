@@ -10,13 +10,14 @@ const orderSchema = new Schema(
     },
     orderItems: [
       {
-        name: { type: String, required: true },
-        quantity: { type: Number, required: true },
-        price: { type: Number, required: true },
-        image: { type: String, required: true },
+        name: { type: String, required: true, trim: true },
+        quantity: { type: Number, required: true, trim: true },
+        price: { type: Number, required: true, trim: true },
+        image: { type: String, required: true, trim: true },
         product: {
           type: Schema.Types.ObjectId,
           required: true,
+          trim: true,
           ref: 'Product',
         },
       },
@@ -63,6 +64,20 @@ const orderSchema = new Schema(
     },
     paidAt: {
       type: Date,
+      trim: true,
+    },
+    isShipped: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    shippedAt: {
+      type: Date,
+      trim: true,
+    },
+    trackingNumber: {
+      type: String,
+      required: false,
       trim: true,
     },
     isDelivered: {

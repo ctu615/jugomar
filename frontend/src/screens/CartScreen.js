@@ -24,7 +24,7 @@ const CartScreen = () => {
   const productId = id;
   const { cartItems } = cartSelector;
 
-  //console.log(cartItems);
+
 
   const quantity = location.search ? Number(location.search.split('=')[1]) : 1;
 

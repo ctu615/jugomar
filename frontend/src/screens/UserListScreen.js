@@ -36,12 +36,15 @@ const UserListScreen = () => {
 
   return (
     <>
+   
       <h1 className='text-success'>Users</h1>
+     
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'> {error} </Message>
-      ) : (
+      ) : (<>
+         <h4 className='text-success'>You have {users.length} unique users</h4>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -85,7 +88,7 @@ const UserListScreen = () => {
             ))}
           </tbody>
         </Table>
-      )}
+      </>)}
     </>
   );
 };
